@@ -14,7 +14,7 @@ First, I'll introduce the traditional Autoencoder from the deep learning perspec
 
 As it is explained in Tenor Flow webpage, an autoencoder is simply a special type of deep neural network which is trained to replicate its input into its output. So essentially, this network learns how to represent the input data, like an image, into a lower dimension (latent) space, and then it learns how to reconstruct back the original input data, such that the reconstruction is as similar as possible to the original data.
 
-The architecture of this Autoencoder is simple. First, there is an encoding process, where the input data (image) is transformed to a lower dimension space. So it takes the $x$ data points and use a neural network to generate an output $z$, where $z<n$. This output is living in a latent space of lower dimension and is merely a representation of the original data in a lower dimension space. The second part of the autoencoder is the decoder: it generates the process backwards. Therefore, the encoder compress the data, while the decoder reconstructs the data back to its original form.
+The architecture of this Autoencoder is simple. First, there is an encoding process, where the input data (image) is transformed to a lower dimension space. So it takes the \( x \) data points and uses a neural network to generate an output \( z \), where \( z < n \). This output is living in a latent space of lower dimension and is merely a representation of the original data in a lower dimension space. The second part of the autoencoder is the decoder: it generates the process backwards. Therefore, the encoder compress the data, while the decoder reconstructs the data back to its original form.
 
 An autoencoder consists of two main parts: the encoder and the decoder.
 
@@ -286,7 +286,7 @@ The results show that the average reconstruction error is quite small, 6.0968116
 
 This is another type of autoencoder which relies on probabilistic modelling of the data. As it is clearly stated by Alexander Van de Kleut in his GitHub, traditional autoencoders map the input data into a latent vector space, but not necesarily those latent vectors are easy to decode back to the original feature space. The fact that the encoding maps deterministically the input into the latent space, this space might become disjoint and non-continuous. That can make harder the decoding process, and it will be harder to generate new data. For solving that issue, variational autoencoders (VAE) map input data to a **probability distribution** over the latent space. Then latent vectors are sampled from that encoded distribution. This makes easier and more robust the process of decoding and thus reconstructing the original data, and also allows to generate some new data.
 
-![Variational Auto Encoder, taken from Yang et al. (2019)](./VAR.jpeg)
+![Variational Auto Encoder, taken from Yang et al. (2019)](VAR.jpeg)
 
 
 
