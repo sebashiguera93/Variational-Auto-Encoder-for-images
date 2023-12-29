@@ -295,9 +295,13 @@ More formally, a VAE will map the vector $x$ not into a latent vector $z=f(x)$, 
 
 It is important that when mapping the data $x$ to the normal distribution, there's some stability in the means and variances mapped for each data point. As Van de Kleut stated, "the outputted means may be significantly different and the standard deviations may be too small." For solving that issue, a prior distribution of the latent vector is introduced. This prior will reflect the desired structure that the latent space must have, thus ensuring a good behavior of the outputs. It is common to chose a standard normal distribution for that purpose. Therefore, the loss function not only need to account for the reconstruction error, but also need to take into account this regularization term. For that purpose, the Kullback–Leibler divergence is introduce. This is just a type of statistical distance between two distributions. So, if we want that the output distributions over the latent space be as close as possible to that prior distribution, we need to minimize the KL divergence between the encoded distribution of latent vectors and the desired prior distribution. Therefore, if we add to the traditional loss function (reconstruction error) this KL divergence, we get a new loss function for the VAE, called the Evidence Lower Bound function for VAE:
 
-$$\text{ELBO} = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \| p(z))$$
+$$
+ELBO = E_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p(z))
+$$
 
-Where $\log p_\theta(x|z)$ is the log likelihood of accurately reconstructing the input data from the latent variables, which we want to maximize (with $\theta=(0,1)$); $\mathbb{E}_{q_\phi(z|x)}$ is the expected value over the distribution of the latent variables 
+
+
+Where $\log p_\theta(x|z)$ is the log likelihood of accurately reconstructing the input data from the latent variables, which we want to maximize (with $\theta=(0,1)$ ); **E**<sub>q<sub>φ</sub>(z|x)</sub>[log p<sub>θ</sub>(x|z)] is the expected value over the distribution of the latent variables 
 $z$, as given by the encoder's output $q_\phi(z|x)$, where $\phi=(\mu,\sigma)$; and $D_{KL}(q_\phi(z|x) \| p(z))$ is the KL divergence between the prior $p(z)$ and the encoder's output, which we want to minimize. Therefore, we will want to maximize the ELBO, or minimize -ELBO, for training correctly the VAE.
 
 There is also a nice trick for training correctly the VAE. Since we use backpropagation for training the model, and backpropagation doesn't work on stochastic objects, it is important to turn the stochastic nature of the sampled latent vectors, to a more 'deterministic' objects. This is called the 'reparametrization trick', and basically changes how the sample is done. So, instead of sampling directly over $q_\phi(z|x)$, we sample over an auxiliary variable $e$ from a distribution $P(e)$ which is not parametrized by $\phi$, and then transform those auxiliary variables through a deterministic function that also depends on $\phi$.
